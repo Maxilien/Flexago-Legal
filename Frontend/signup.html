@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Flexago Signup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Signup CSS -->
+  <link rel="stylesheet" href="css/signup.css" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+ <header class="signup-header">
+  <div class="signup-logo">Flexago</div>
+
+  <div class="signup-header-right">
+
+    <nav class="signup-nav">
+      <a href="Sender.html" class="signup-nav-item">Sender</a>
+      <a href="Traveler.html" class="signup-nav-item">Traveler</a>
+      <a href="about.html" class="signup-nav-item">About</a>
+    </nav>
+
+    <select class="lang-select" id="languageSelector">
+      <option value="en">EN</option>
+      <option value="es">ES</option>
+      <option value="fr">FR</option>
+      <option value="ht">HT</option>
+      <option value="zh">ZH</option>
+      <option value="pt">PT</option>
+    </select>
+
+  </div>
+</header>
+
+  <!-- MAIN SIGNUP CONTAINER -->
+  <main class="signup-container">
+    <h2>Create Your Flexago Account</h2>
+
+    <div class="signup-form">
+
+      <label class="role-label">First Name</label>
+      <input id="firstName" class="input-field" placeholder="First name" />
+
+      <label class="role-label">Last Name</label>
+      <input id="lastName" class="input-field" placeholder="Last name" />
+
+      <label class="role-label">Select Role</label>
+      <select id="role" class="input-field">
+        <option value="Sender">Sender</option>
+        <option value="Traveler">Traveler</option>
+      </select>
+
+      <button id="nextBtn" class="signup-btn">Next</button>
+
+      <p class="signup-login-text">
+        Already have an account? <a href="login.html">Login</a>
+      </p>
+
+    </div>
+  </main>
+
+  <!-- SCRIPT -->
+  <script src="signup.js"></script>
+
+</body>
+</html>

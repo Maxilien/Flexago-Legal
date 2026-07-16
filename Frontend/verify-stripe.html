@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verify Payouts – Flexago Traveler</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="css/auth.css" />
+
+  <style>
+    body {
+      font-family: Inter, sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 0;
+    }
+
+    .verify-container {
+      max-width: 480px;
+      margin: 60px auto;
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+
+    p {
+      color: #6b7280;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    .primary-btn {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      padding: 12px;
+      background: #e5e7eb;
+      color: #374151;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="verify-container">
+
+  <h1>Set Up Your Payouts</h1>
+  <p>Travelers must connect a payout account to receive delivery earnings.</p>
+
+  <button id="connectStripeBtn" class="primary-btn">
+    Connect with Stripe
+  </button>
+
+  <button id="skipBtn" class="secondary-btn">
+    Skip for Now
+  </button>
+
+</div>
+
+<script>
+  // Load user
+  const user = JSON.parse(localStorage.getItem("flexagoUser"));
+  if (!user) window.location.href = "/signup.html";
+
+  // Only travelers should be here
+  if (user.role !== "traveler") {
+    window.location.href = "/Sender.html";
+  }
+
+  // Connect Stripe
+  document.getElementById("connectStripeBtn").onclick = async () => {
+    const res = await fetch("https://flexago-backend.onrender.com/api/verify/stripe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: user._id })
+    });
+
+    const data = await res.json();
+
+    if (!data.success || !data.url) {
+      alert("Unable to start Stripe onboarding. Try again.");
+      return;
+    }
+
+    // Redirect to Stripe onboarding URL
+    window.location.href = data.url;
+  };
+
+  // Skip for now (not recommended)
+  document.getElementById("skipBtn").onclick = () => {
+    alert("You can continue, but payouts will not be available until Stripe is connected.");
+    window.location.href = "/traveler.html";
+  };
+</script>
+
+</body>
+</html>

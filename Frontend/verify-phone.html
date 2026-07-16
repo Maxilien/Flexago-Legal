@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verify Phone – Flexago</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="css/auth.css" />
+
+  <style>
+    body {
+      font-family: Inter, sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 0;
+    }
+
+    .verify-container {
+      max-width: 420px;
+      margin: 60px auto;
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+
+    p {
+      color: #6b7280;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    .verify-box {
+      margin-top: 20px;
+      text-align: left;
+    }
+    .country-select {
+  width: 80px;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: white;
+}
+
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    .phone-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .country-select {
+      width: 110px;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: white;
+    }
+
+    .primary-btn {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      padding: 12px;
+      background: #e5e7eb;
+      color: #374151;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    .next-btn {
+      width: 100%;
+      padding: 12px;
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      opacity: 0.5;
+    }
+
+    .next-btn.enabled {
+      opacity: 1;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="verify-container">
+
+  <h1>Verify Your Phone</h1>
+  <p>Enter your phone number to receive a verification code.</p>
+
+  <div class="verify-box">
+
+    <!-- COUNTRY CODE + PHONE -->
+    <label>Phone Number</label>
+
+    <div class="phone-row">
+      <select id="countryCode" class="country-select">
+        <option value="+1">🇺🇸 +1</option>
+        <option value="+44">🇬🇧 +44</option>
+        <option value="+61">🇦🇺 +61</option>
+        <option value="+33">🇫🇷 +33</option>
+        <option value="+49">🇩🇪 +49</option>
+        <option value="+34">🇪🇸 +34</option>
+        <option value="+81">🇯🇵 +81</option>
+        <option value="+971">🇦🇪 +971</option>
+      </select>
+
+      <input id="phoneInput" class="input-field" placeholder="555 123 4567" />
+    </div>
+
+    <button id="sendSmsBtn" class="primary-btn">
+      Send SMS Code
+    </button>
+
+    <!-- ENTER SMS CODE -->
+    <label>Enter SMS Code</label>
+    <input id="smsCodeInput" class="input-field" placeholder="123456" />
+
+    <button id="verifyPhoneBtn" class="primary-btn">
+      Verify Phone
+    </button>
+
+    <button id="resendPhoneBtn" class="secondary-btn">
+      Resend Code
+    </button>
+
+    <!-- NEXT BUTTON -->
+    <button id="nextBtn" class="next-btn" disabled>
+      Next
+    </button>
+
+  </div>
+
+</div>
+
+<script src="verify-phone.js"></script>
+
+</body>
+</html>

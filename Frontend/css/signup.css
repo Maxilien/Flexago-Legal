@@ -1,0 +1,186 @@
+/* ===== GLOBAL ===== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: #f3f4f6; /* Light gray background */
+  color: #111;
+}
+
+/* ===== TOP BANNER (Blue Uber-style) ===== */
+.signup-header {
+  width: 100%;
+  height: 70px;
+  background: #1e40af; /* Deep Flexago Blue */
+  border-bottom: 1px solid #1e3a8a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  box-sizing: border-box;
+}
+
+.signup-logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.signup-header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.signup-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.signup-nav-item {
+  text-decoration: none;
+  color: #dbeafe; /* Light blue text */
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.signup-nav-item:hover {
+  color: #ffffff;
+}
+
+/* ===== LANGUAGE SELECTOR ===== */
+.lang-select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #93c5fd;
+  background: #ffffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* ===== SIGNUP CONTAINER ===== */
+.signup-container {
+  max-width: 420px;
+  margin: 60px auto;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  position: relative;
+  z-index: 10; /* ensure card stays above watermark */
+}
+
+.signup-container h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ===== FORM ===== */
+.signup-form input,
+.signup-form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.signup-form input:focus,
+.signup-form select:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+.role-label {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  display: block;
+  color: #374151;
+}
+
+/* ===== BUTTON ===== */
+.signup-btn {
+  width: 100%;
+  padding: 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s ease;
+}
+
+.signup-btn:hover {
+  background: #1e4fc7;
+}
+
+/* ===== LOGIN TEXT ===== */
+.signup-login-text {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.9rem;
+}
+
+.signup-login-text a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.signup-login-text a:hover {
+  text-decoration: underline;
+}
+
+/* ===== WATERMARK BEHIND SIGNUP CARD ===== */
+.flexago-watermark {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  width: 1000px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+  opacity: 1; /* stronger visibility */
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Inter, Arial, sans-serif;
+}
+
+/* ===== STAGE ICONS ===== */
+.flexago-stage {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #1e40af;
+}
+
+.flexago-icon {
+  font-size: 5rem; /* larger icons */
+  margin-bottom: 10px;
+}
+
+/* ===== OPTIONAL ANIMATION ===== */
+.flexago-stage {
+  animation: fadeInStages 6s ease-in-out infinite;
+}
+
+.flexago-stage:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.flexago-stage:nth-child(3) {
+  animation-delay: 2s;
+}
+
+@keyframes fadeInStages {
+  0% { opacity: 0.9; transform: translateY(0); }
+  50% { opacity: 0.9; transform: translateY(-6px); }
+  100% { opacity: 0.9; transform: translateY(0); }
+}

@@ -1,0 +1,53 @@
+/* Container */
+.signup-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+/* Form */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Labels */
+.role-label {
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Inputs */
+.input-field {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Buttons */
+.primary-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.primary-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Status text */
+.status-text {
+  font-size: 14px;
+  color: #555;
+  margin-top: -10px;
+}
