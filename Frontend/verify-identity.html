@@ -96,7 +96,7 @@
 
   // Start verification
   document.getElementById("startVerificationBtn").onclick = async () => {
-    const res = await fetch("https://flexago-backend.onrender.com/api/identity/create-session", {
+    const res = await fetch("https://flexago-backend.onrender.com/api/verify/create-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user._id })
@@ -115,12 +115,10 @@
 
   // Continue after verification
   document.getElementById("continueBtn").onclick = () => {
-    // Sender goes to Sender.html
     if (user.role === "sender") {
       window.location.href = "/Sender.html";
     }
 
-    // Traveler goes to payout onboarding
     if (user.role === "traveler") {
       window.location.href = "/verify-stripe.html";
     }
