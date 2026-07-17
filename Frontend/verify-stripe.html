@@ -92,7 +92,7 @@
 
   // Connect Stripe
   document.getElementById("connectStripeBtn").onclick = async () => {
-    const res = await fetch("https://flexago-backend.onrender.com/api/verify/stripe", {
+    const res = await fetch("https://flexago-backend.onrender.com/api/verify/create-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user._id })
