@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Verify Payouts – Flexago Traveler</title>
+  <title>Verify Identity – Flexago Traveler</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <link rel="stylesheet" href="css/auth.css" />
@@ -60,22 +60,32 @@
       cursor: pointer;
       margin-top: 12px;
     }
+
+    .success {
+      color: #16a34a;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 
 <body>
 
-<div class="verify-container">
+<div class="verify-container" id="verifyBox">
 
-  <h1>Set Up Your Payouts</h1>
-  <p>Travelers must connect a payout account to receive delivery earnings.</p>
+  <h1>Verify Your Identity</h1>
+  <p>Travelers must verify their identity before creating a payout account.</p>
 
-  <button id="connectStripeBtn" class="primary-btn">
-    Connect with Stripe
+  <div id="statusArea">
+    <!-- Status will be injected here -->
+  </div>
+
+  <button id="startBtn" class="primary-btn">
+    Start Identity Verification
   </button>
 
-  <button id="skipBtn" class="secondary-btn">
-    Skip for Now
+  <button id="nextBtn" class="secondary-btn" style="display:none;">
+    Next: Create Account
   </button>
 
 </div>
@@ -90,8 +100,41 @@
     window.location.href = "/Sender.html";
   }
 
-  // Connect Stripe
-  document.getElementById("connectStripeBtn").onclick = async () => {
+  /* ============================================================
+     1. CHECK VERIFICATION STATUS
+     ============================================================ */
+  async function checkStatus() {
+    const res = await fetch(
+      `https://flexago-backend.onrender.com/api/verify/status?userId=${user._id}`
+    );
+
+    const data = await res.json();
+
+    const statusArea = document.getElementById("statusArea");
+    const startBtn = document.getElementById("startBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    if (data.verified) {
+      statusArea.innerHTML = `
+        <p class="success">🎉 Identity Verified</p>
+      `;
+      startBtn.style.display = "none";
+      nextBtn.style.display = "block";
+    } else {
+      statusArea.innerHTML = `
+        <p>Your identity has not been verified yet.</p>
+      `;
+      startBtn.style.display = "block";
+      nextBtn.style.display = "none";
+    }
+  }
+
+  checkStatus();
+
+  /* ============================================================
+     2. START IDENTITY VERIFICATION
+     ============================================================ */
+  document.getElementById("startBtn").onclick = async () => {
     const res = await fetch("https://flexago-backend.onrender.com/api/verify/create-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -101,18 +144,19 @@
     const data = await res.json();
 
     if (!data.success || !data.url) {
-      alert("Unable to start Stripe onboarding. Try again.");
+      alert("Unable to start identity verification. Try again.");
       return;
     }
 
-    // Redirect to Stripe onboarding URL
+    // Redirect to Stripe Identity
     window.location.href = data.url;
   };
 
-  // Skip for now (not recommended)
-  document.getElementById("skipBtn").onclick = () => {
-    alert("You can continue, but payouts will not be available until Stripe is connected.");
-    window.location.href = "/traveler.html";
+  /* ============================================================
+     3. NEXT STEP AFTER VERIFICATION
+     ============================================================ */
+  document.getElementById("nextBtn").onclick = () => {
+    window.location.href = "/create-account.html";
   };
 </script>
 
