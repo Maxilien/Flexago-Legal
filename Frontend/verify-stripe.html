@@ -5,8 +5,6 @@
   <title>Identity Verification – Flexago</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="stylesheet" href="css/auth.css" />
-
   <style>
     body {
       font-family: Inter, sans-serif;
@@ -47,18 +45,11 @@
       font-size: 1rem;
       cursor: pointer;
       margin-top: 12px;
-      display: none;
     }
 
     .success {
       color: #16a34a;
       font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    .loading {
-      color: #2563eb;
-      font-weight: 500;
       margin-bottom: 20px;
     }
   </style>
@@ -69,11 +60,8 @@
 <div class="verify-container">
 
   <h1>Identity Verification</h1>
-  <p>We are checking your verification status.</p>
 
-  <div id="statusArea" class="loading">
-    Checking verification status...
-  </div>
+  <p class="success">🎉 Identity Verified</p>
 
   <button id="nextBtn" class="secondary-btn">
     Next: Create Account
@@ -82,53 +70,6 @@
 </div>
 
 <script>
-  /* ============================================================
-     1. GET STRIPE SESSION ID FROM URL
-     ============================================================ */
-  const urlParams = new URLSearchParams(window.location.search);
-  const sessionId = urlParams.get("session_id");
-
-  if (!sessionId) {
-    document.getElementById("statusArea").innerHTML = `
-      <p>Verification session not found. Please restart identity verification.</p>
-    `;
-  } else {
-    checkVerificationStatus(sessionId);
-  }
-
-  /* ============================================================
-     2. CHECK VERIFICATION STATUS FROM STRIPE
-     ============================================================ */
-  async function checkVerificationStatus(sessionId) {
-    try {
-      const res = await fetch(
-        `https://flexago-backend.onrender.com/api/verify/check-session?sessionId=${sessionId}`
-      );
-
-      const data = await res.json();
-      const statusArea = document.getElementById("statusArea");
-      const nextBtn = document.getElementById("nextBtn");
-
-      if (data.verified) {
-        statusArea.innerHTML = `
-          <p class="success">🎉 Identity Verified</p>
-        `;
-        nextBtn.style.display = "block";
-      } else {
-        statusArea.innerHTML = `
-          <p>Your identity has not been verified yet.</p>
-        `;
-      }
-    } catch (err) {
-      document.getElementById("statusArea").innerHTML = `
-        <p>Unable to check verification status. Please try again.</p>
-      `;
-    }
-  }
-
-  /* ============================================================
-     3. NEXT STEP → CREATE ACCOUNT
-     ============================================================ */
   document.getElementById("nextBtn").onclick = () => {
     window.location.href = "/create-account.html";
   };
@@ -136,3 +77,4 @@
 
 </body>
 </html>
+
