@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Verify Identity – Flexago Traveler</title>
+  <title>Verify Identity – Flexago</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <link rel="stylesheet" href="css/auth.css" />
@@ -52,13 +52,14 @@
     .secondary-btn {
       width: 100%;
       padding: 12px;
-      background: #e5e7eb;
-      color: #374151;
+      background: #10b981;
+      color: white;
       border: none;
       border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
       margin-top: 12px;
+      display: none;
     }
 
     .success {
@@ -71,89 +72,60 @@
 
 <body>
 
-<div class="verify-container" id="verifyBox">
+<div class="verify-container">
 
-  <h1>Verify Your Identity</h1>
-  <p>Travelers must verify their identity before creating a payout account.</p>
+  <h1>Identity Verification</h1>
+  <p>We are checking your verification status.</p>
 
-  <div id="statusArea">
-    <!-- Status will be injected here -->
-  </div>
+  <div id="statusArea"></div>
 
-  <button id="startBtn" class="primary-btn">
-    Start Identity Verification
-  </button>
-
-  <button id="nextBtn" class="secondary-btn" style="display:none;">
+  <button id="nextBtn" class="secondary-btn">
     Next: Create Account
   </button>
 
 </div>
 
 <script>
-  // Load user
-  const user = JSON.parse(localStorage.getItem("flexagoUser"));
-  if (!user) window.location.href = "/signup.html";
+  /* ============================================================
+     1. GET STRIPE SESSION ID FROM URL
+     ============================================================ */
+  const urlParams = new URLSearchParams(window.location.search);
+  const sessionId = urlParams.get("session_id");
 
-  // Only travelers should be here
-  if (user.role !== "traveler") {
-    window.location.href = "/Sender.html";
+  if (!sessionId) {
+    document.getElementById("statusArea").innerHTML = `
+      <p>Verification session not found. Please restart identity verification.</p>
+    `;
+  } else {
+    checkVerificationStatus(sessionId);
   }
 
   /* ============================================================
-     1. CHECK VERIFICATION STATUS
+     2. CHECK VERIFICATION STATUS FROM STRIPE
      ============================================================ */
-  async function checkStatus() {
+  async function checkVerificationStatus(sessionId) {
     const res = await fetch(
-      `https://flexago-backend.onrender.com/api/verify/status?userId=${user._id}`
+      `https://flexago-backend.onrender.com/api/verify/check-session?sessionId=${sessionId}`
     );
 
     const data = await res.json();
-
     const statusArea = document.getElementById("statusArea");
-    const startBtn = document.getElementById("startBtn");
     const nextBtn = document.getElementById("nextBtn");
 
     if (data.verified) {
       statusArea.innerHTML = `
         <p class="success">🎉 Identity Verified</p>
       `;
-      startBtn.style.display = "none";
       nextBtn.style.display = "block";
     } else {
       statusArea.innerHTML = `
         <p>Your identity has not been verified yet.</p>
       `;
-      startBtn.style.display = "block";
-      nextBtn.style.display = "none";
     }
   }
 
-  checkStatus();
-
   /* ============================================================
-     2. START IDENTITY VERIFICATION
-     ============================================================ */
-  document.getElementById("startBtn").onclick = async () => {
-    const res = await fetch("https://flexago-backend.onrender.com/api/verify/create-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user._id })
-    });
-
-    const data = await res.json();
-
-    if (!data.success || !data.url) {
-      alert("Unable to start identity verification. Try again.");
-      return;
-    }
-
-    // Redirect to Stripe Identity
-    window.location.href = data.url;
-  };
-
-  /* ============================================================
-     3. NEXT STEP AFTER VERIFICATION
+     3. NEXT STEP → CREATE ACCOUNT
      ============================================================ */
   document.getElementById("nextBtn").onclick = () => {
     window.location.href = "/create-account.html";

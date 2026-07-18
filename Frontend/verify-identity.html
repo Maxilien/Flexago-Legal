@@ -61,6 +61,12 @@
       margin-top: 12px;
       display: none;
     }
+
+    .success {
+      color: #16a34a;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 
@@ -70,6 +76,8 @@
 
   <h1>Verify Your Identity</h1>
   <p>Click below to begin secure identity verification.</p>
+
+  <div id="statusArea"></div>
 
   <button id="startVerificationBtn" class="primary-btn">
     Start Identity Verification
@@ -82,24 +90,14 @@
 </div>
 
 <script>
-  const user = JSON.parse(localStorage.getItem("flexagoUser"));
-  if (!user) window.location.href = "/signup.html";
-
-  // Detect if Stripe redirected back to this page
-  const urlParams = new URLSearchParams(window.location.search);
-  const sessionId = urlParams.get("session_id");
-
-  if (sessionId) {
-    // Stripe has redirected back — show Continue button
-    document.getElementById("continueBtn").style.display = "block";
-  }
-
-  // Start verification
+  /* ============================================================
+     1. START IDENTITY VERIFICATION (NO USER ID NEEDED)
+     ============================================================ */
   document.getElementById("startVerificationBtn").onclick = async () => {
     const res = await fetch("https://flexago-backend.onrender.com/api/verify/create-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user._id })
+      body: JSON.stringify({}) // No userId needed
     });
 
     const data = await res.json();
@@ -113,18 +111,45 @@
     window.location.href = data.url;
   };
 
-  // Continue after verification
-  document.getElementById("continueBtn").onclick = () => {
-    if (user.role === "sender") {
-      window.location.href = "/Sender.html";
-    }
+  /* ============================================================
+     2. CHECK VERIFICATION STATUS WHEN STRIPE RETURNS
+     ============================================================ */
+  const urlParams = new URLSearchParams(window.location.search);
+  const sessionId = urlParams.get("session_id");
 
-    if (user.role === "traveler") {
-      window.location.href = "/verify-stripe.html";
+  if (sessionId) {
+    // Stripe redirected back — check verification status
+    checkVerificationStatus(sessionId);
+  }
+
+  async function checkVerificationStatus(sessionId) {
+    const res = await fetch(
+      `https://flexago-backend.onrender.com/api/verify/check-session?sessionId=${sessionId}`
+    );
+
+    const data = await res.json();
+    const statusArea = document.getElementById("statusArea");
+    const continueBtn = document.getElementById("continueBtn");
+
+    if (data.verified) {
+      statusArea.innerHTML = `
+        <p class="success">🎉 Identity Verified</p>
+      `;
+      continueBtn.style.display = "block";
+    } else {
+      statusArea.innerHTML = `
+        <p>Your identity has not been verified yet.</p>
+      `;
     }
+  }
+
+  /* ============================================================
+     3. CONTINUE TO ACCOUNT CREATION
+     ============================================================ */
+  document.getElementById("continueBtn").onclick = () => {
+    window.location.href = "/create-account.html";
   };
 </script>
 
 </body>
 </html>
-
