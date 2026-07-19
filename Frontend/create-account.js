@@ -14,8 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value.trim();
     const role = document.getElementById("role").value;
 
-    if (!firstName || !lastName || !email || !phone || !password) {
-      alert("Please fill out all fields.");
+    // Validate required fields
+    if (!firstName || !lastName || !email || !phone || !password || !role) {
+      alert("Please fill out all fields and select a role.");
       return;
     }
 
@@ -44,11 +45,13 @@ document.addEventListener("DOMContentLoaded", () => {
       // Save user in localStorage
       localStorage.setItem("flexagoUser", JSON.stringify(data.user));
 
-      // ⭐ Redirect based on role
+      // ⭐ Redirect based on role (now works correctly)
       if (role === "traveler") {
         window.location.href = "traveler.html";
-      } else {
+      } else if (role === "sender") {
         window.location.href = "Sender.html";
+      } else {
+        alert("Unknown role selected.");
       }
 
     } catch (err) {
