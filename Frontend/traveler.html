@@ -18,6 +18,8 @@
       --transition-fast: 250ms ease-in-out;
     }
 
+ 
+
     select.input-shell,
     select.input-shell option {
       color: #111 !important;
@@ -27,82 +29,54 @@
 </head>
 
 <body>
+  <div class="app-shell">
 
-<!-- ====== TRAVELER GATEKEEPER ====== -->
-<script>
-  const user = JSON.parse(localStorage.getItem("flexagoUser"));
+    <!-- ====== TOP NAVBAR ====== -->
+    <header class="top-nav">
+      <div class="top-nav-left">
+        <button class="hamburger-btn" id="hamburgerBtn">
+          <i data-lucide="menu"></i>
+        </button>
 
-  if (!user) {
-    window.location.href = "/signup.html";
-  }
+        <div class="logo-mark"><div class="logo-mark-inner"></div></div>
 
-  if (!user.emailVerified) {
-    window.location.href = "/verify-email.html";
-  }
-
-  if (!user.phoneVerified) {
-    window.location.href = "/verify-phone.html";
-  }
-
-  if (!user.personaVerified) {
-    window.location.href = "/verify-identity.html";
-  }
-
-  // Traveler-only requirement
-  if (!user.stripeVerified) {
-    window.location.href = "/verify-stripe.html";
-  }
-</script>
-
-<div class="app-shell">
-
-  <!-- ====== TOP NAVBAR ====== -->
-  <header class="top-nav">
-    <div class="top-nav-left">
-      <button class="hamburger-btn" id="hamburgerBtn">
-        <i data-lucide="menu"></i>
-      </button>
-
-      <div class="logo-mark"><div class="logo-mark-inner"></div></div>
-
-      <div class="top-nav-title">
-        <div class="top-nav-title-main" data-i18n="traveler.nav.title">
-          Flexago Traveler
-        </div>
-        <div class="top-nav-title-sub" data-i18n="traveler.nav.subtitle">
-          Logistics marketplace for travelers
+        <div class="top-nav-title">
+          <div class="top-nav-title-main" data-i18n="traveler.nav.title">
+            Flexago Traveler
+          </div>
+          <div class="top-nav-title-sub" data-i18n="traveler.nav.subtitle">
+            Logistics marketplace for travelers
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="top-nav-center">
-      <div class="top-nav-search">
-        <i data-lucide="search" style="width:14px;height:14px;color:#9ca3af;"></i>
-        <input
-          type="text"
-          placeholder="Search jobs, routes, earnings..."
-          data-i18n-placeholder="traveler.nav.searchPlaceholder"
-        />
+      <div class="top-nav-center">
+        <div class="top-nav-search">
+          <i data-lucide="search" style="width:14px;height:14px;color:#9ca3af;"></i>
+          <input
+            type="text"
+            placeholder="Search jobs, routes, earnings..."
+            data-i18n-placeholder="traveler.nav.searchPlaceholder"
+          />
+        </div>
       </div>
-    </div>
 
-    <div class="top-nav-right">
-      <div class="env-pill" data-i18n="traveler.nav.env">SANDBOX</div>
-      <div class="version-pill" data-i18n="traveler.nav.version">v1.0.0</div>
+      <div class="top-nav-right">
+        <div class="env-pill" data-i18n="traveler.nav.env">SANDBOX</div>
+        <div class="version-pill" data-i18n="traveler.nav.version">v1.0.0</div>
 
-      <select class="lang-select" id="languageSelector">
-        <option value="en">EN</option>
-        <option value="es">ES</option>
-        <option value="fr">FR</option>
-        <option value="ht">HT</option>
-        <option value="zh">ZH</option>
-        <option value="pt">PT</option>
-      </select>
-    </div>
-  </header>
+        <select class="lang-select" id="languageSelector">
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="fr">FR</option>
+          <option value="ht">HT</option>
+          <option value="zh">ZH</option>
+          <option value="pt">PT</option>
+        </select>
+      </div>
+    </header>
 
-  <!-- ====== MAIN LAYOUT ====== -->
-
+    <!-- ====== MAIN LAYOUT ====== -->
     <div class="main-layout">
 
       <!-- ====== SIDEBAR ====== -->
