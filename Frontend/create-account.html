@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Create Account – Flexago Traveler</title>
+  <title>Create Account – Flexago</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <link rel="stylesheet" href="css/auth.css" />
@@ -38,7 +38,7 @@
       text-align: center;
     }
 
-    input {
+    input, select {
       width: 100%;
       padding: 12px;
       margin-bottom: 16px;
@@ -59,11 +59,11 @@
       margin-top: 12px;
     }
 
-    .success {
-      color: #16a34a;
-      font-weight: 600;
-      margin-bottom: 20px;
+    #statusArea {
       text-align: center;
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+      color: #dc2626;
     }
   </style>
 </head>
@@ -72,68 +72,35 @@
 
 <div class="create-container">
 
-  <h1>Create Your Traveler Account</h1>
-  <p>Your identity has been verified. Complete your account setup below.</p>
+  <h1>Create Your Flexago Account</h1>
+  <p>Complete your account setup below.</p>
 
   <div id="statusArea"></div>
 
-  <input id="firstName" type="text" placeholder="First Name" />
-  <input id="lastName" type="text" placeholder="Last Name" />
-  <input id="email" type="email" placeholder="Email" />
-  <input id="phone" type="text" placeholder="Phone Number" />
+  <form id="createAccountForm">
 
-  <button id="createBtn" class="primary-btn">
-    Create Account
-  </button>
+    <input id="firstName" type="text" placeholder="First Name" />
+    <input id="lastName" type="text" placeholder="Last Name" />
+    <input id="email" type="email" placeholder="Email" />
+    <input id="phone" type="text" placeholder="Phone Number" />
+
+    <input id="password" type="password" placeholder="Password (min 6 chars)" />
+
+    <select id="role">
+      <option value="traveler">Traveler</option>
+      <option value="sender">Sender</option>
+    </select>
+
+    <button id="createBtn" class="primary-btn" type="submit">
+      Create Account
+    </button>
+
+  </form>
 
 </div>
 
-<script>
-  document.getElementById("createBtn").onclick = async () => {
-    const firstName = document.getElementById("firstName").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-
-    if (!firstName || !lastName || !email || !phone) {
-      document.getElementById("statusArea").innerHTML =
-        "<p>Please fill out all fields.</p>";
-      return;
-    }
-
-    const res = await fetch("https://flexago-backend.onrender.com/api/auth/create-traveler", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        phone,
-        role: "traveler",
-        kycVerified: true
-      })
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      document.getElementById("statusArea").innerHTML =
-        '<p class="success">🎉 Account Created Successfully!</p>';
-
-      // Save user to localStorage
-      localStorage.setItem("flexagoUser", JSON.stringify(data.user));
-
-      // Redirect to Traveler Dashboard
-      setTimeout(() => {
-        window.location.href = "/Traveler.html";
-      }, 1500);
-
-    } else {
-      document.getElementById("statusArea").innerHTML =
-        `<p>${data.message || "Unable to create account."}</p>`;
-    }
-  };
-</script>
+<script src="create-account.js"></script>
 
 </body>
 </html>
+

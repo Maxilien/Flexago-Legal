@@ -16,19 +16,17 @@ if (nextBtn) {
 async function signup() {
   const firstName = document.getElementById("firstName").value.trim();
   const lastName = document.getElementById("lastName").value.trim();
-  const role = document.getElementById("role").value;
 
   // 🧩 Basic validation
-  if (!firstName || !lastName || !role) {
+  if (!firstName || !lastName) {
     alert("Please fill out all fields.");
     return;
   }
 
-  // 💾 Store temporary user info before verification
+  // 💾 Store temporary user info before role selection
   localStorage.setItem("tempFirstName", firstName);
   localStorage.setItem("tempLastName", lastName);
-  localStorage.setItem("tempRole", role);
 
-  // 🔄 Redirect to email verification page
-  window.location.href = "verify-email.html";
+  // 🔄 Redirect to create-account page (role selection happens there)
+  window.location.href = "create-account.html";
 }
