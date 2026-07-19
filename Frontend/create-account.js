@@ -21,19 +21,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const res = await fetch("https://flexago-backend.onrender.com/api/account/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          phone,
-          password,
-          role,
-          kycVerified: true
-        })
-      });
+const res = await fetch("https://flexago-backend.onrender.com/api/users", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    firstName,
+    lastName,
+    email: email.toLowerCase(),
+    phone,
+    password,
+    role,
+    kycVerified: true
+  })
+});
+
 
       const data = await res.json();
 
