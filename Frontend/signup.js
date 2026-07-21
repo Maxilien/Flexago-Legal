@@ -27,6 +27,9 @@ async function signup() {
   localStorage.setItem("tempFirstName", firstName);
   localStorage.setItem("tempLastName", lastName);
 
+  // 📝 Store timestamp (helps with A2P compliance logs if needed later)
+  localStorage.setItem("signupTimestamp", Date.now().toString());
+
   // 🔄 Redirect to create-account page (role selection happens there)
   window.location.href = "create-account.html";
 }
