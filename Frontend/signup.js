@@ -7,7 +7,7 @@ if (languageSelector) {
   });
 }
 
-// 🚀 Handle Next button click
+// 🚀 Handle Next button by click
 const nextBtn = document.getElementById("nextBtn");
 if (nextBtn) {
   nextBtn.addEventListener("click", signup);
